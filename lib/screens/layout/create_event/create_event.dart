@@ -1,6 +1,5 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/appimages/appimages.dart';
-import 'package:event_app/screens/layout/categories_data.dart';
 import 'package:event_app/screens/layout/create_event/widget/create_event_categories.dart';
 import 'package:event_app/screens/layout/create_event/widget/create_event_tabitem.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +95,7 @@ class _CreateEventState extends State<CreateEvent> {
                       selectedTabIndex = index;
                     });
                   },
-        
+
                   tabs: createEventCategories.map((categoriesData) {
                     return CreateEventTabitem(
                       isSelected:
@@ -140,7 +139,7 @@ class _CreateEventState extends State<CreateEvent> {
               ),
               TextFormField(
                 maxLines: 4,
-        
+
                 decoration: InputDecoration(
                   hintText: "Event Description",
                   disabledBorder: OutlineInputBorder(
@@ -211,62 +210,59 @@ class _CreateEventState extends State<CreateEvent> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 15),
-        InkWell(
-          onTap: () {
-            // Handle click
-          },
-          borderRadius: BorderRadius.circular(16),
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.blue.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.primary, width: 1),
-            ),
-            child: Row(
-              children: [
-                // Left Icon Box
-                Container(
-                  padding: const EdgeInsets.all(10),
+              InkWell(
+                onTap: () {
+                  // Handle click
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.blueAccent,
-                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.primary, width: 1),
                   ),
-                  child: const Icon(
-                    Icons.my_location,
-                    color: Colors.white,
-                    size: 20,
+                  child: Row(
+                    children: [
+                      // Left Icon Box
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.my_location,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+
+                      // Text
+                      Expanded(
+                        child: Text(
+                          " Chosse Event Location",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+
+                      // Right Arrow
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                        color: Colors.blueAccent,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 15),
-        
-                // Text
-                Expanded(
-                  child: Text(
-                    " Chosse Event Location",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.blueAccent,
-                    ),
-                  ),
-                ),
-        
-                // Right Arrow
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 16,
-                  color: Colors.blueAccent,
-                ),
-              ],
-            ),
-        
-        
-          ),
-        ),
+              ),
               SizedBox(height: 15),
               ElevatedButton(
-        
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
@@ -285,7 +281,6 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ),
               ),
-        
             ],
           ),
         ),
