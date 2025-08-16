@@ -3,5 +3,7 @@ class CategoriesData {
   final String categoryImg;
   final String categoryIcon;
 
+
+
   CategoriesData({required this.categoryTitle, required this.categoryImg, required this.categoryIcon});
 }
