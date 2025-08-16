@@ -8,15 +8,21 @@ class CreateEvent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title:
+        const Text(
           textAlign: TextAlign.center,
           "Create Event",style:
           TextStyle(
 
-            fontSize: 20,
+            fontSize: 24,
             fontWeight: FontWeight.w400,
             color: AppColors.primary
           ),),
+      ),
+      body: Column(
+        children: [
+
+        ],
       ),
     );
   }
