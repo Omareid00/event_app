@@ -15,7 +15,7 @@ class EventData {
     required this.selectDate,
     required this.eventCategoryId,
     required this.eventCategoryImage,
-    required this.isFavorite,
+     this.isFavorite=false,
   });
 
 
