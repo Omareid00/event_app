@@ -19,4 +19,29 @@ class EventData {
   });
 
 
+  factory EventData.fromFirestore(Map<String, dynamic> json) {
+    return EventData(
+      eventId: json['eventId'],
+      eventTitle: json['eventTitle'],
+      eventDescription: json['eventDescription'],
+      selectDate: DateTime.parse(json['selectDate']),
+      eventCategoryId: json['eventCategoryId'],
+      eventCategoryImage: json['eventCategoryImage'],
+      isFavorite: json['isFavorite'] ?? false,
+    );
+
+
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'eventId': eventId,
+      'eventTitle': eventTitle,
+      'eventDescription': eventDescription,
+      'selectDate': selectDate.toIso8601String(),
+      'eventCategoryId': eventCategoryId,
+      'eventCategoryImage': eventCategoryImage,
+      'isFavorite': isFavorite,
+    };
+  }
 }

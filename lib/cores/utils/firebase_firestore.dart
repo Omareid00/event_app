@@ -1,22 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_app/models/event_task_data.dart';
+import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 
  abstract class FirebaseFirestoreService {
-   static CollectionReference<EventTaskData> _getCollectionReference() {
+   static CollectionReference<EventData> _getCollectionReference() {
      return FirebaseFirestore.instance
          .collection(EventTaskData.collectionName)
          .withConverter(fromFirestore: (snapshot, _) =>
-         EventTaskData.fromFirestore(snapshot.data()!),
+         EventData.fromFirestore(snapshot.data()!),
        toFirestore: (value, _) => value.toFirestore(),);
    }
 
-   static createNeweventTask(EventTaskData eventTaskData) {
+   static Future<void> createNewEventTask(EventData eventData) async {
      var collectionReference = _getCollectionReference();
      var documentReference = collectionReference.doc();
-     documentReference.set(eventTaskData);
+     return documentReference.set(eventData);
    }
 
-   static Future<List<EventTaskData>> getEventList() async{
+   static Future<List<EventData>> getEventList() async{
      var collectionReference = _getCollectionReference();
      var dataCollection = await collectionReference.get();
      return dataCollection.docs.map((e) {

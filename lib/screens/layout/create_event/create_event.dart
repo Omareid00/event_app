@@ -1,9 +1,13 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/appimages/appimages.dart';
+import 'package:event_app/cores/utils/firebase_firestore.dart';
+import 'package:event_app/models/event_task_data.dart';
 import 'package:event_app/screens/layout/create_event/widget/create_event_categories.dart';
 import 'package:event_app/screens/layout/create_event/widget/create_event_tabitem.dart';
 import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 
 class CreateEvent extends StatefulWidget {
@@ -16,6 +20,7 @@ class CreateEvent extends StatefulWidget {
 class _CreateEventState extends State<CreateEvent> {
   int selectedTabIndex = 0;
   DateTime? selectedDate;
+  TimeOfDay? selectedTime;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController titleController = TextEditingController();
@@ -87,6 +92,10 @@ class _CreateEventState extends State<CreateEvent> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                SizedBox(
+                  width: 1.0,
+                  height: 0.25,
+                ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset(
@@ -94,7 +103,7 @@ class _CreateEventState extends State<CreateEvent> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 DefaultTabController(
                   length: createEventCategories.length,
                   child: TabBar(
@@ -122,7 +131,7 @@ class _CreateEventState extends State<CreateEvent> {
                     }).toList(),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 Text(
                   "Title",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -155,7 +164,7 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 Text(
                   "Description",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -189,7 +198,7 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(Icons.calendar_month_outlined),
@@ -230,9 +239,11 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                     Spacer(),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        getCurrentTime();
+                      },
                       child: Text(
-                        "Choose Time",
+                        selectedTime==null?"Choose Time":selectedTime.toString(),
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -242,12 +253,12 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 Text(
                   "Location",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 InkWell(
                   onTap: () {
                     // Handle click
@@ -275,7 +286,7 @@ class _CreateEventState extends State<CreateEvent> {
                             size: 20,
                           ),
                         ),
-                        const SizedBox(width: 15),
+                        const SizedBox(width: 10),
 
                         // Text
                         Expanded(
@@ -299,18 +310,27 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      if (selectedDate != null) {
-                        var eventdata= EventData(
+                     EasyLoading.show();
+                      if (selectedDate != null && selectedTime != null) {
+
+                        final datafirebase= EventData(
+
                           eventTitle: titleController.text,
-                            eventDescription: descriptionController.text,
-                            selectDate: selectedDate!,
-                            eventCategoryId: createEventCategories[selectedTabIndex].categoryId,
-                             eventCategoryImage: createEventCategories[selectedTabIndex].categoryImg,);
+                          eventId: "",
+                          isFavorite: false,
+                          eventDescription: descriptionController.text,
+                          selectDate: selectedDate!,
+                          eventCategoryId: createEventCategories[selectedTabIndex].categoryId,
+                          eventCategoryImage: createEventCategories[selectedTabIndex].categoryImg,);
                       }
+                    //  FirebaseFirestoreService.createNewEventTask().then((_) {
+                    //    EasyLoading.dismiss();
+                    //
+                    // },);
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -347,6 +367,16 @@ class _CreateEventState extends State<CreateEvent> {
     ).then((value) {
       setState(() {
         selectedDate= value;
+      });
+    });
+  }
+  void getCurrentTime() {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    ).then((value) {
+      setState(() {
+        selectedTime= value;
       });
     });
   }
