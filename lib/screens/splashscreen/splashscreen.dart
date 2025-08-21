@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/appimages/appimages.dart';
 import 'package:event_app/screens/intropage/intropage.dart';
+import 'package:event_app/screens/onboarding/onboarding_view.dart';
 import 'package:flutter/material.dart';
 
 import '../Authentication/Login/loginscreen.dart';
@@ -25,7 +26,7 @@ class _SplashscreenState extends State<Splashscreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginScreen(),
+          builder: (context) => IntroPage(),
         ), // Replace with your main screen
       );
     });

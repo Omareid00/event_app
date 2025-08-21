@@ -1,15 +1,23 @@
-import 'package:event_app/cores/app_routes/app_routes.dart';
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:event_app/cores/manager/app_provider.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../cores/appcolors/appcolors.dart';
 import '../../cores/appimages/appimages.dart';
 import '../onboarding/onboarding_view.dart';
 
-class IntroPage extends StatelessWidget {
+class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
 
   @override
+  State<IntroPage> createState() => _IntroPageState();
+}
+
+class _IntroPageState extends State<IntroPage> {
+  @override
   Widget build(BuildContext context) {
+    var provider =Provider.of<AppProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -69,6 +77,28 @@ class IntroPage extends StatelessWidget {
                                   color: AppColors.primary,
                                 ),
                               ),
+                              Spacer(),
+                              AnimatedToggleSwitch<String>.rolling(
+                                current: 'en',
+                                values: ["en", "ar"],
+                                onChanged: (value) {},
+                                iconList: [
+                                  Icon(Icons.light_mode),
+                                  Icon(Icons.dark_mode),
+                                ],
+                                height: 40,
+                                indicatorSize: Size(40, 40),
+                                style: ToggleStyle(
+                                  backgroundColor: Colors.transparent,
+                                  borderColor: AppColors.primary,
+                                  indicatorColor: AppColors.primary,
+
+
+                                ),
+
+
+                              )
+
                             ],
                           ),
                           SizedBox(height: 20),
@@ -82,6 +112,29 @@ class IntroPage extends StatelessWidget {
                                   color: AppColors.primary,
                                 ),
                               ),
+                              Spacer(),
+                              AnimatedToggleSwitch<ThemeMode>.rolling(
+                                  current: provider.themeMode,
+                                  values: const [ThemeMode.light, ThemeMode.dark],
+                                  onChanged: (value) {
+                                    provider.getThemeMode();
+                                  },
+                                iconList: [
+                                  Icon(Icons.light_mode),
+                                  Icon(Icons.dark_mode),
+                                ],
+                                height: 40,
+                                indicatorSize: Size(40, 40),
+                                style: ToggleStyle(
+                                  backgroundColor: Colors.transparent,
+                                  borderColor: AppColors.primary,
+                                  indicatorColor: AppColors.primary,
+
+
+                                ),
+
+
+                              )
                             ],
                           ),
                         ],

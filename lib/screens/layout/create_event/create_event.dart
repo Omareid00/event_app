@@ -1,17 +1,15 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/appimages/appimages.dart';
 import 'package:event_app/cores/utils/firebase_firestore.dart';
-import 'package:event_app/models/event_task_data.dart';
 import 'package:event_app/screens/layout/create_event/widget/create_event_categories.dart';
 import 'package:event_app/screens/layout/create_event/widget/create_event_tabitem.dart';
 import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 
 class CreateEvent extends StatefulWidget {
-  const CreateEvent({Key? key}) : super(key: key);
+  const CreateEvent({super.key});
 
   @override
   State<CreateEvent> createState() => _CreateEventState();
@@ -313,24 +311,27 @@ class _CreateEventState extends State<CreateEvent> {
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
+                    EventData data= EventData(
+
+                      eventTitle: titleController.text,
+                      eventId: "",
+                      isFavorite: false,
+                      eventDescription: descriptionController.text,
+                      selectDate: selectedDate!,
+                      eventCategoryId: createEventCategories[selectedTabIndex].categoryId,
+                      eventCategoryImage: createEventCategories[selectedTabIndex].categoryImg,);
                     if (formKey.currentState!.validate()) {
-                     EasyLoading.show();
-                      if (selectedDate != null && selectedTime != null) {
+                      if (selectedDate != null ) {
+                        EasyLoading.show();
+                        FirebaseFirestoreService.createNewEventTask(data).then((value) {
+                          EasyLoading.dismiss();
+                        });
 
-                        final datafirebase= EventData(
 
-                          eventTitle: titleController.text,
-                          eventId: "",
-                          isFavorite: false,
-                          eventDescription: descriptionController.text,
-                          selectDate: selectedDate!,
-                          eventCategoryId: createEventCategories[selectedTabIndex].categoryId,
-                          eventCategoryImage: createEventCategories[selectedTabIndex].categoryImg,);
+
+
                       }
-                    //  FirebaseFirestoreService.createNewEventTask().then((_) {
-                    //    EasyLoading.dismiss();
-                    //
-                    // },);
+
                     }
                   },
                   style: ElevatedButton.styleFrom(
