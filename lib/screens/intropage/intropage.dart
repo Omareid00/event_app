@@ -16,7 +16,7 @@ class IntroPage extends StatefulWidget {
 class _IntroPageState extends State<IntroPage> {
   @override
   Widget build(BuildContext context) {
-    var provider =Provider.of<AppProvider>(context);
+    var provider = Provider.of<AppProvider>(context);
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -151,10 +151,10 @@ class _IntroPageState extends State<IntroPage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => OnboardingView(),
-                                ), // Replace with your main screen
+                                ),
                               ),
 
-                              child: Text("Let's Start"),
+
                               style: ElevatedButton.styleFrom(
                                 textStyle: TextStyle(
                                   fontSize: 20,
@@ -168,6 +168,8 @@ class _IntroPageState extends State<IntroPage> {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
+                              child:
+                              Text("Let's Start"),
                             ),
                           ),
                         ],
