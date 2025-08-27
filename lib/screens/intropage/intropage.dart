@@ -1,4 +1,8 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:event_app/cores/appicons/appicons.dart';
+import 'package:event_app/cores/localization/custome_tr.dart';
+import 'package:event_app/cores/localization/custome_trans.dart';
 import 'package:event_app/cores/manager/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -79,26 +83,25 @@ class _IntroPageState extends State<IntroPage> {
                               ),
                               Spacer(),
                               AnimatedToggleSwitch<String>.rolling(
-                                current: 'en',
-                                values: ["en", "ar"],
-                                onChanged: (value) {},
-                                iconList: [
-                                  Icon(Icons.light_mode),
-                                  Icon(Icons.dark_mode),
-                                ],
+                                current: context.locale.languageCode, // get current language
+                                values: const ["en", "ar"],
                                 height: 40,
-                                indicatorSize: Size(40, 40),
+                                indicatorSize: const Size(40, 40),
+                                onChanged: (langCode) {
+                                  context.setLocale(Locale(langCode));
+                                  },
+                                iconList: [
+                                 Image.asset(Appicons.er),
+                                 Image.asset(Appicons.eg),
+
+
+                                ],
                                 style: ToggleStyle(
                                   backgroundColor: Colors.transparent,
-                                  borderColor: AppColors.primary,
                                   indicatorColor: AppColors.primary,
-
-
+                                  borderColor: AppColors.primary,
                                 ),
-
-
                               )
-
                             ],
                           ),
                           SizedBox(height: 20),
@@ -120,7 +123,8 @@ class _IntroPageState extends State<IntroPage> {
                                     provider.getThemeMode();
                                   },
                                 iconList: [
-                                  Icon(Icons.light_mode),
+                                  Icon(Icons.light_mode,
+                                  color:AppColors.white ,),
                                   Icon(Icons.dark_mode),
                                 ],
                                 height: 40,
@@ -129,9 +133,10 @@ class _IntroPageState extends State<IntroPage> {
                                   backgroundColor: Colors.transparent,
                                   borderColor: AppColors.primary,
                                   indicatorColor: AppColors.primary,
-
-
                                 ),
+                                onTap: (props) {
+
+                                },
 
 
                               )
@@ -169,7 +174,7 @@ class _IntroPageState extends State<IntroPage> {
                                 ),
                               ),
                               child:
-                              Text("Let's Start"),
+                              Text(CustomeTrans.letsStart.customTr),
                             ),
                           ),
                         ],

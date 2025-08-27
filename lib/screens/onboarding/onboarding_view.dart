@@ -20,26 +20,24 @@ class _OnboardingViewState extends State<OnboardingView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.white,
-        bottomSheet: Container(
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(onPressed: () =>pageController.previousPage(duration: Duration(milliseconds: 400), curve: Curves.bounceIn) ,
-            icon: Icon(Icons.arrow_back,color: AppColors.primary,applyTextScaling: true,),),
-            SmoothPageIndicator(
-              onDotClicked:(index) => pageController.animateToPage(index,
-                  duration: const Duration(milliseconds: 350),
-                  curve:Curves.decelerate ) ,
-              controller: pageController,
-              count: controller.onboardingItems.length,
-              effect: const WormEffect(
-                dotHeight: 12,
-                dotWidth: 12,
-                activeDotColor: AppColors.primary,
-              ),),
-            IconButton(onPressed : () => pageController.nextPage(duration: Duration(milliseconds: 400), curve: Curves.bounceIn),
-              icon: Icon(Icons.arrow_forward,color: AppColors.primary,applyTextScaling: true,),),
-          ],),
-        ),
+        bottomSheet: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(onPressed: () =>pageController.previousPage(duration: Duration(milliseconds: 400), curve: Curves.bounceIn) ,
+          icon: Icon(Icons.arrow_back,color: AppColors.primary,applyTextScaling: true,),),
+          SmoothPageIndicator(
+            onDotClicked:(index) => pageController.animateToPage(index,
+                duration: const Duration(milliseconds: 350),
+                curve:Curves.decelerate ) ,
+            controller: pageController,
+            count: controller.onboardingItems.length,
+            effect: const WormEffect(
+              dotHeight: 12,
+              dotWidth: 12,
+              activeDotColor: AppColors.primary,
+            ),),
+          IconButton(onPressed : () => pageController.nextPage(duration: Duration(milliseconds: 400), curve: Curves.bounceIn),
+            icon: Icon(Icons.arrow_forward,color: AppColors.primary,applyTextScaling: true,),),
+        ],),
         body: PageView.builder(
             onPageChanged: (index)=>setState(()=>isLastPage=controller.onboardingItems.length-1==index),
             itemCount: controller.onboardingItems.length,
@@ -91,7 +89,7 @@ class _OnboardingViewState extends State<OnboardingView> {
 //  Widget finishButton(){
 //   return TextButton(onPressed: ()async{
 //     final pres = await SharedPreferences.getInstance();
-//     pres.setBool("onboarding", true);
+//     pres.getBool("onboarding", true);
 //
 //     if(!mounted)return;
 //     Navigator.pushReplacementNamed(context, APPROUTES.LoginScreen);

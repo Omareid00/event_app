@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event_app/cores/app_routes/app_routes.dart';
 import 'package:event_app/cores/app_theme/app_theme.dart';
 import 'package:event_app/cores/manager/app_provider.dart';
@@ -13,7 +14,19 @@ void main()async{ {
   await Firebase.initializeApp(
     options:DefaultFirebaseOptions.currentPlatform
   );
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(supportedLocales: [
+      Locale("en"),
+      Locale("ar"),
+      
+    ],
+      fallbackLocale: Locale("en") ,
+      useOnlyLangCode: true,
+      path: "assets/langs",
+      startLocale: Locale("en"),
+      child:const MyApp()),
+    
+    );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,7 +41,11 @@ class MyApp extends StatelessWidget {
         var provider =Provider.of<AppProvider>(context);
         return MaterialApp(home: Splashscreen(),
           themeMode: provider.themeMode,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
           routes: ROUTES.routes,
           initialRoute: APPROUTES.splash,
           debugShowCheckedModeBanner: false,);
