@@ -35,10 +35,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons:
   animate_do:
+  bot_toast: ^4.0.0
   smooth_page_indicator:
   flutter_bounceable:
   firebase_core:
   cloud_firestore:
+  firebase_auth:
   intl:
   flutter_easyloading:
   animated_toggle_switch:

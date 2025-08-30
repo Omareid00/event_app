@@ -1,9 +1,12 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/appimages/appimages.dart';
+import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 import 'package:flutter/material.dart';
 
 class Eventitemcard extends StatelessWidget {
-  const Eventitemcard({Key? key}) : super(key: key);
+  final EventData eventData;
+
+  const Eventitemcard({super.key,required this.eventData});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class Eventitemcard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        image: DecorationImage(image: AssetImage(AppImages.Sport), fit: BoxFit.cover),
+        image: DecorationImage(image: AssetImage(eventData.eventCategoryImage), fit: BoxFit.cover),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +32,7 @@ class Eventitemcard extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  '21\nNov',
+                  eventData.selectDate.toString(),
                   style: TextStyle(color: AppColors.primary, fontSize: 20,
                       fontWeight: FontWeight.w900,height: 1),
 
@@ -48,12 +51,13 @@ class Eventitemcard extends StatelessWidget {
             child: Row(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("This is a Birthday Party ",style: TextStyle(
+                Text(eventData.eventTitle,style: TextStyle(
                   color: AppColors.black,
                   fontSize: 14,
                   fontWeight: FontWeight.w700
                 ),),
-                Icon(Icons.favorite_border)
+                Icon(eventData.isFavorite?
+                Icons.favorite:Icons.favorite_border)
               ],
             ),
           )

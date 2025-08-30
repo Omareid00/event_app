@@ -1,12 +1,15 @@
 class EventData {
-  String? eventId;
-  final String eventTitle;
-  final String eventDescription;
-  final DateTime selectDate;
-  final String eventCategoryId;
-  final String eventCategoryImage;
 
-  final bool isFavorite;
+  static const String collectionName = 'EventTask';
+
+  String? eventId;
+   String eventTitle;
+   String eventDescription;
+   DateTime selectDate;
+   String eventCategoryId;
+   String eventCategoryImage;
+
+   bool isFavorite;
 
   EventData({
     this.eventId,

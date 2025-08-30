@@ -1,11 +1,12 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/screens/layout/categories_data.dart';
+import 'package:event_app/screens/layout/create_event/widget/create_event_categories.dart';
 import 'package:flutter/material.dart';
 
 class Tabitemwidget extends StatelessWidget {
-  final CategoriesData categoriesData ;
+  final CreateEventCategories createEventCategories ;
   final bool isSelected;
-  const Tabitemwidget({super.key, required this.categoriesData, required this.isSelected});
+  const Tabitemwidget({super.key, required this.createEventCategories, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class Tabitemwidget extends StatelessWidget {
               color: isSelected ? AppColors.primary : AppColors.white,
               ),
 
-          Text(categoriesData.categoryTitle,style: TextStyle(
+          Text(createEventCategories.categoryTitle,style: TextStyle(
               color: isSelected ? AppColors.primary : AppColors.white,
             fontSize: 16,
             fontWeight: FontWeight.w500

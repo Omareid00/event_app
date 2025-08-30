@@ -1,10 +1,12 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
+import 'package:event_app/cores/appimages/appimages.dart';
+import 'package:event_app/cores/utils/firebase_firestore.dart';
 import 'package:event_app/screens/layout/categories_data.dart';
+import 'package:event_app/screens/layout/create_event/widget/create_event_categories.dart';
+import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 import 'package:event_app/screens/layout/widgets/eventitemcard.dart';
 import 'package:event_app/screens/layout/widgets/tabitemwidget.dart';
 import 'package:flutter/material.dart';
-
-import '../categories_data.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,24 +17,48 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int selectedTabIndex = 0;
-  List<CategoriesData> categories = [
-    CategoriesData(categoryTitle: "Sports", categoryImg: "", categoryIcon: ""),
-    CategoriesData(
-      categoryTitle: "Birthday",
-      categoryImg: "",
-      categoryIcon: "",
-    ),
-    CategoriesData(
+  List<CreateEventCategories> createEventCategories = [
+    CreateEventCategories(
       categoryTitle: "Book club",
-      categoryImg: "",
-      categoryIcon: "",
+      categoryImg: AppImages.book,
+      categoryIcon: Icons.book,
+      categoryId: "book club",
     ),
-    CategoriesData(categoryTitle: "gaming", categoryImg: "", categoryIcon: ""),
-    CategoriesData(categoryTitle: "meeting", categoryImg: "", categoryIcon: ""),
-    CategoriesData(
-      categoryTitle: "Workshop",
-      categoryImg: "",
-      categoryIcon: "",
+    CreateEventCategories(
+      categoryTitle: "Sport",
+      categoryImg: AppImages.Sport,
+      categoryIcon: Icons.directions_bike_outlined,
+      categoryId: "sport",
+    ),
+    CreateEventCategories(
+      categoryTitle: "Birthday",
+      categoryImg: AppImages.birthday,
+      categoryIcon: Icons.cake,
+      categoryId: "birthday",
+    ),
+    CreateEventCategories(
+      categoryTitle: "meeting",
+      categoryImg: AppImages.meeting,
+      categoryIcon: Icons.meeting_room_sharp,
+      categoryId: "meeting",
+    ),
+    CreateEventCategories(
+      categoryTitle: "gaming",
+      categoryImg: AppImages.gaming,
+      categoryIcon: Icons.ice_skating_outlined,
+      categoryId: 'gaming',
+    ),
+    CreateEventCategories(
+      categoryTitle: "Eating",
+      categoryImg: AppImages.eating,
+      categoryIcon: Icons.ice_skating_outlined,
+      categoryId: "eating",
+    ),
+    CreateEventCategories(
+      categoryTitle: "Holiday",
+      categoryImg: AppImages.holiday,
+      categoryIcon: Icons.ice_skating_outlined,
+      categoryId: "holiday",
     ),
   ];
   @override
@@ -122,7 +148,7 @@ class _HomeState extends State<Home> {
                     ),
                     SizedBox(height: 10),
                     DefaultTabController(
-                      length: categories.length,
+                      length: createEventCategories.length,
                       child: TabBar(
                         isScrollable: true,
                         tabAlignment: TabAlignment.start,
@@ -138,12 +164,13 @@ class _HomeState extends State<Home> {
                           });
                         },
 
-                        tabs: categories.map((categoriesData) {
+                        tabs: createEventCategories.map((categoriesData) {
                           return Tabitemwidget(
                             isSelected:
                                 selectedTabIndex ==
-                                categories.indexOf(categoriesData),
-                            categoriesData: categoriesData,
+                                createEventCategories.indexOf(categoriesData),
+                            createEventCategories: categoriesData,
+
                           );
                         }).toList(),
                       ),
@@ -152,18 +179,35 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            Expanded(
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount:categories.length,
-                itemBuilder:(context, index) {
-                  return Eventitemcard();
-                } ,
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: 10,);
-                },
+            StreamBuilder(
+              stream: FirebaseFirestoreService.getStreamEventList(
+                categoryId: createEventCategories[selectedTabIndex].categoryId,
               ),
-            )
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text("Something went wrong"));
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                List<EventData> eventDataList = snapshot.data!.docs.map((e) {
+                  return e.data();
+                }).toList();
+
+                return Expanded(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: eventDataList.length,
+                    itemBuilder: (context, index) {
+                      return Eventitemcard(eventData: eventDataList[index]);
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: 10);
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ],

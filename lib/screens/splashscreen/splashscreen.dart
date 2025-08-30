@@ -26,7 +26,7 @@ class _SplashscreenState extends State<Splashscreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => IntroPage(),
+          builder: (context) => LoginScreen(),
         ), // Replace with your main screen
       );
     });

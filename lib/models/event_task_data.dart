@@ -13,27 +13,4 @@ class EventTaskData {
     required this.eventDescription,
     required this.isFavourite,
   });
-
-  factory EventTaskData.fromFirestore(Map<String, dynamic> json) {
-    return EventTaskData(
-      eventId: json['eventId'] ,
-      eventTitle: json['eventTitle'] ,
-      eventCategory: json['eventCategory'] ,
-      eventDescription: json['eventDescription'] ,
-      isFavourite: json['isFavourite'] ,
-    );
-  }
-
-
-  Map<String, dynamic> toFirestore() {
-    return {
-      'eventId': eventId,
-      'eventTitle': eventTitle,
-      'eventCategory': eventCategory,
-      'eventDescription': eventDescription,
-      'isFavourite': isFavourite,
-    };
-  }
-
-
 }

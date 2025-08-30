@@ -1,20 +1,28 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:event_app/models/event_task_data.dart';
 import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 
  abstract class FirebaseFirestoreService {
    static CollectionReference<EventData> _getCollectionReference() {
      return FirebaseFirestore.instance
-         .collection(EventTaskData.collectionName)
+         .collection(EventData.collectionName)
          .withConverter(fromFirestore: (snapshot, _) =>
          EventData.fromFirestore(snapshot.data()!),
        toFirestore: (value, _) => value.toFirestore(),);
    }
 
-   static Future<void> createNewEventTask(EventData eventData) async {
-     var collectionReference = _getCollectionReference();
-     var documentReference = collectionReference.doc();
-     return documentReference.set(eventData);
+   static Future<bool> createNewEventTask(EventData eventData) async {
+     try{
+       var collectionReference = _getCollectionReference();
+       var documentReference = collectionReference.doc();
+       eventData.eventId = documentReference.id;
+       documentReference.set(eventData);
+        return Future.value(true);
+     }catch(e){
+       return Future.value(false);
+     }
+
    }
 
    static Future<List<EventData>> getEventList() async{
@@ -26,5 +34,15 @@ import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 
 
    }
+
+   static Stream<QuerySnapshot<EventData>> getStreamEventList({required String categoryId}) {
+     var collectionReference = _getCollectionReference().where("eventCategoryId",
+     isEqualTo: categoryId);
+     return collectionReference.snapshots();
+
+
+   }
+
+
 }
 

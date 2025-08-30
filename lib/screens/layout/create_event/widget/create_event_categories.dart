@@ -4,7 +4,6 @@ class CreateEventCategories {
   final String categoryTitle;
   final String categoryImg;
   final IconData categoryIcon;
-
   final String categoryId;
 
   CreateEventCategories({
