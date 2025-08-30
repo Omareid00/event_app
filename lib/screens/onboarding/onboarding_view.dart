@@ -1,7 +1,9 @@
 import 'package:event_app/screens/onboarding/onboardingitems.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../cores/app_routes/app_routes.dart';
 import '../../cores/appcolors/appcolors.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -85,20 +87,21 @@ class _OnboardingViewState extends State<OnboardingView> {
       ),
     );
   }
+  Widget finishButton(){
+    return TextButton(onPressed: ()async{
+      final pres = await SharedPreferences.getInstance();
+      pres.setBool("onboarding", true);
+
+      if(!mounted)return;
+      Navigator.pushReplacementNamed(context, APPROUTES.LoginScreen);
+    },
+        child: const Text("",style:
+        TextStyle(
+            color: AppColors.primary,
+            fontWeight: FontWeight.bold,
+            fontSize: 18
+        ),));
+  }
+
 }
-//  Widget finishButton(){
-//   return TextButton(onPressed: ()async{
-//     final pres = await SharedPreferences.getInstance();
-//     pres.getBool("onboarding", true);
-//
-//     if(!mounted)return;
-//     Navigator.pushReplacementNamed(context, APPROUTES.LoginScreen);
-//   },
-//       child: const Text("Finish",style:
-//   TextStyle(
-//       color: APPCOLORS.gold,
-//       fontWeight: FontWeight.bold,
-//       fontSize: 18
-//   ),));
-// }
 

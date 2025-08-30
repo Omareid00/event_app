@@ -1,8 +1,7 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:flutter/material.dart';
 
-class AppTheme {
-  AppTheme._();
+abstract class AppTheme {
   static ThemeData lightTheme = ThemeData(
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.white,
@@ -26,8 +25,6 @@ class AppTheme {
   static ThemeData darkTheme = ThemeData(
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.black,
-    primaryColorLight: AppColors.black,
-    primaryColorDark: AppColors.white,
       textTheme: TextTheme(
         bodySmall: TextStyle(
             color: AppColors.white,

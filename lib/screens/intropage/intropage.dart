@@ -1,14 +1,15 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:event_app/cores/app_routes/app_routes.dart';
 import 'package:event_app/cores/appicons/appicons.dart';
 import 'package:event_app/cores/localization/custome_tr.dart';
 import 'package:event_app/cores/localization/custome_trans.dart';
 import 'package:event_app/cores/manager/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../cores/appcolors/appcolors.dart';
 import '../../cores/appimages/appimages.dart';
-import '../onboarding/onboarding_view.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -120,7 +121,7 @@ class _IntroPageState extends State<IntroPage> {
                                   current: provider.themeMode,
                                   values: const [ThemeMode.light, ThemeMode.dark],
                                   onChanged: (value) {
-                                    provider.getThemeMode();
+                                    provider.changeTheme(value! == ThemeMode.dark ? ThemeMode.dark : ThemeMode.light);
                                   },
                                 iconList: [
                                   Icon(Icons.light_mode,
@@ -134,9 +135,7 @@ class _IntroPageState extends State<IntroPage> {
                                   borderColor: AppColors.primary,
                                   indicatorColor: AppColors.primary,
                                 ),
-                                onTap: (props) {
-
-                                },
+                                onTap: (props) {},
 
 
                               )
@@ -152,12 +151,20 @@ class _IntroPageState extends State<IntroPage> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () => Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OnboardingView(),
-                                ),
-                              ),
+                              onPressed: () async {
+                                var prefs =
+                                    await SharedPreferences.getInstance();
+                                var onboarding =
+                                    prefs.getBool("onboarding") ?? false;
+                                if (onboarding) {
+                                  provider.setOnTime();
+                                  Navigator.pushReplacementNamed(
+                                      context, APPROUTES.LoginScreen);
+                                } else {
+                                  Navigator.pushReplacementNamed(
+                                      context, APPROUTES.OnboardingView);
+                                }
+                              },
 
 
                               style: ElevatedButton.styleFrom(

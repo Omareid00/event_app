@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => AppProvider(),
+      create: (context) => AppProvider()..getTheme()..getLang(),
       builder: (context, child) {
         var provider =Provider.of<AppProvider>(context);
         return MaterialApp(home: Splashscreen(),
