@@ -1,7 +1,9 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/appimages/appimages.dart';
+import 'package:event_app/cores/utils/firebase_firestore.dart';
 import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
 
 class Eventitemcard extends StatelessWidget {
   final EventData eventData;
@@ -56,8 +58,14 @@ class Eventitemcard extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w700
                 ),),
-                Icon(eventData.isFavorite?
-                Icons.favorite:Icons.favorite_border)
+                Bounceable(
+                  onTap: () {
+                    eventData.isFavorite =!eventData.isFavorite;
+                    FirebaseFirestoreService.updateEvent(eventData: eventData);
+                  },
+                  child: Icon(eventData.isFavorite?
+                  Icons.favorite:Icons.favorite_border),
+                )
               ],
             ),
           )

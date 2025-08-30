@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
@@ -39,7 +38,16 @@ import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
      var collectionReference = _getCollectionReference().where("eventCategoryId",
      isEqualTo: categoryId);
      return collectionReference.snapshots();
-
+   }
+   static Stream<QuerySnapshot<EventData>> getFavouriteStreamEventList() {
+     var collectionReference = _getCollectionReference().where("isFavorite",
+     isEqualTo: true);
+     return collectionReference.snapshots();
+   }
+   static Future<void> updateEvent({required EventData eventData}) {
+     var collectionReference = _getCollectionReference();
+     var documentReference = collectionReference.doc(eventData.eventId);
+     return documentReference.update({"isFavorite":eventData.isFavorite});
 
    }
 

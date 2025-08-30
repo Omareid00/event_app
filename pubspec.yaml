@@ -46,6 +46,7 @@ dependencies:
   animated_toggle_switch:
   provider:
   easy_localization:
+  animated_custom_dropdown:
 
 
 

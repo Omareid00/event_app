@@ -1,7 +1,6 @@
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/appimages/appimages.dart';
 import 'package:event_app/cores/utils/firebase_firestore.dart';
-import 'package:event_app/screens/layout/categories_data.dart';
 import 'package:event_app/screens/layout/create_event/widget/create_event_categories.dart';
 import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 import 'package:event_app/screens/layout/widgets/eventitemcard.dart';
@@ -63,6 +62,7 @@ class _HomeState extends State<Home> {
   ];
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Stack(
       children: [
         Column(
@@ -194,7 +194,7 @@ class _HomeState extends State<Home> {
                   return e.data();
                 }).toList();
 
-                return Expanded(
+                return eventDataList.isEmpty?Center(child: Text("No Events",style: theme.textTheme.bodyLarge,),)    :Expanded(
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: eventDataList.length,
