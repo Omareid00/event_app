@@ -11,41 +11,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
-void main()async{ {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-}
-  await Firebase.initializeApp(
-    options:DefaultFirebaseOptions.currentPlatform
-  );
-  runApp(
 
-    EasyLocalization(supportedLocales: [
-      Locale("en"),
-      Locale("ar"),
-      
-    ],
-      fallbackLocale: Locale("en") ,
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale("en"),
+        Locale("ar"),
+      ],
+      fallbackLocale: const Locale("en"),
       useOnlyLangCode: true,
       path: "assets/langs",
-      startLocale: Locale("en"),
-      child:const MyApp()),
-    
-    );
+      startLocale: const Locale("en"),
+      child: const MyApp(),
+    ),
+  );
+
   configLoadindg();
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static ThemeMode themeMode = ThemeMode.light;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => AppProvider()..getTheme()..getLang(),
       builder: (context, child) {
-        var provider =Provider.of<AppProvider>(context);
-        return MaterialApp(home: Splashscreen(),
-          themeMode: provider.themeMode,
+        var provider = Provider.of<AppProvider>(context);
+
+        return MaterialApp(
+          home: const Splashscreen(),
+          themeMode: provider.themeMode, // 👈 listens to provider
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
@@ -54,12 +56,11 @@ class MyApp extends StatelessWidget {
           routes: ROUTES.routes,
           initialRoute: APPROUTES.splash,
           builder: EasyLoading.init(
-            builder: BotToastInit()
+            builder: BotToastInit(),
           ),
-          debugShowCheckedModeBanner: false,);
-
+          debugShowCheckedModeBanner: false,
+        );
       },
-
-      );
+    );
   }
 }

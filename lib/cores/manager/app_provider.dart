@@ -1,73 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AppProvider extends ChangeNotifier{
+class AppProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.light;
-  String lang ="en";
+  String lang = "en";
 
-  void changeTheme(ThemeMode? value){
-    if(value!= null){
-      themeMode=value;
-    }else{
-      if(themeMode==ThemeMode.light){
-        themeMode =ThemeMode.dark;
-      }else{
-        themeMode =ThemeMode.light;
-      }
+  /// Change theme and save it
+  void changeTheme(ThemeMode? value) async {
+    if (value != null) {
+      themeMode = value;
+    } else {
+      // toggle if no value provided
+      themeMode = themeMode == ThemeMode.light
+          ? ThemeMode.dark
+          : ThemeMode.light;
     }
-    saveTheme();
+
+    await saveTheme();
     notifyListeners();
-    }
-  Future<void> saveTheme() async{
+  }
+
+  /// Save theme to SharedPreferences
+  Future<void> saveTheme() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("theme", themeMode.name);
   }
-  Future<void> getTheme() async{
+
+  /// Load theme from SharedPreferences
+  Future<void> getTheme() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String theme =  prefs.getString("theme")??"light";
-    if(theme =="light"){
+    String theme = prefs.getString("theme") ?? "light";
+
+    if (theme == "light") {
       themeMode = ThemeMode.light;
-    }else{
+    } else {
       themeMode = ThemeMode.dark;
     }
-    }
-  bool isDarkMode()=>themeMode==ThemeMode.dark;
-  void changeLanguage(String? value){
-    if(value!= null ){
-      lang=value;
-    }else{
-      if(lang =="en"){
-        lang ="ar";
-      }else{
-        lang="en";
-      }
-    }
-    saveLang();
+   saveTheme();
     notifyListeners();
   }
 
-  Future<void> saveLang() async{
+  /// Check if dark mode is active
+  bool isDarkMode() => themeMode == ThemeMode.dark;
+
+  /// Change language and save it
+  void changeLanguage(String? value) async {
+    if (value != null) {
+      lang = value;
+    } else {
+      // toggle if no value provided
+      lang = lang == "en" ? "ar" : "en";
+    }
+
+    await saveLang();
+    notifyListeners();
+  }
+
+  /// Save language to SharedPreferences
+  Future<void> saveLang() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("lang", lang);
   }
 
-  Future<void> getLang() async{
+  /// Load language from SharedPreferences
+  Future<void> getLang() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    lang =  prefs.getString("lang")??"en";
-    }
-  Future<void> setOnTime()async{
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool("isFirst", false);
+    lang = prefs.getString("lang") ?? "en";
 
+    notifyListeners(); // 👈 important!
   }
 
-  Future<bool> getOntime()async{
+  /// Mark onboarding as finished
+  Future<void> setOnTime() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool("isFirst")??true;
+    await prefs.setBool("isFirst", false);
+  }
 
-    }
-
-
-
-
+  /// Check if onboarding should be shown
+  Future<bool> getOntime() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool("isFirst") ?? true;
+  }
 }

@@ -40,7 +40,7 @@ dependencies:
   flutter_bounceable:
   firebase_core:
   cloud_firestore:
-  firebase_auth:
+  firebase_auth: ^6.0.1
   intl:
   flutter_easyloading:
   animated_toggle_switch:

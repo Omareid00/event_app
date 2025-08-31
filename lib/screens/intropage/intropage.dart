@@ -151,19 +151,9 @@ class _IntroPageState extends State<IntroPage> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () async {
-                                var prefs =
-                                    await SharedPreferences.getInstance();
-                                var onboarding =
-                                    prefs.getBool("onboarding") ?? false;
-                                if (onboarding) {
-                                  provider.setOnTime();
-                                  Navigator.pushReplacementNamed(
-                                      context, APPROUTES.LoginScreen);
-                                } else {
-                                  Navigator.pushReplacementNamed(
-                                      context, APPROUTES.OnboardingView);
-                                }
+                              onPressed:() {
+                                Navigator.pushReplacementNamed(
+                                    context, APPROUTES.OnboardingView);
                               },
 
 
