@@ -48,6 +48,7 @@ dependencies:
   easy_localization:
   animated_custom_dropdown:
   shared_preferences:
+  location: ^8.0.1
 
 
 

@@ -39,11 +39,7 @@ class AppProvider extends ChangeNotifier {
    saveTheme();
     notifyListeners();
   }
-
-  /// Check if dark mode is active
   bool isDarkMode() => themeMode == ThemeMode.dark;
-
-  /// Change language and save it
   void changeLanguage(String? value) async {
     if (value != null) {
       lang = value;
@@ -56,13 +52,11 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Save language to SharedPreferences
   Future<void> saveLang() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("lang", lang);
   }
 
-  /// Load language from SharedPreferences
   Future<void> getLang() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     lang = prefs.getString("lang") ?? "en";
@@ -76,7 +70,6 @@ class AppProvider extends ChangeNotifier {
     await prefs.setBool("isFirst", false);
   }
 
-  /// Check if onboarding should be shown
   Future<bool> getOntime() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool("isFirst") ?? true;

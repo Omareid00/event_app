@@ -16,6 +16,7 @@ class _RegisterState extends State<Register> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   validator: (value) {
                     final emailRegex = RegExp(
-                      r'^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$',
+                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                     );
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
@@ -94,13 +95,12 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   validator: (value) {
                     final passwordRegex = RegExp(
-                      r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*]).{8,}$',
                     );
-
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
-                    if (!passwordRegex.hasMatch(value)) {
+                    else if (!passwordRegex.hasMatch(value)) {
                       return 'Please enter a valid password';
                     }
                     return null;
@@ -121,6 +121,7 @@ class _RegisterState extends State<Register> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
+                  controller: confirmPasswordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
@@ -157,7 +158,7 @@ class _RegisterState extends State<Register> {
                                 emailController.text, 
                                 passwordController.text).then((value) {
                                   EasyLoading.dismiss();
-                                  if(true == value){
+                                  if(value != null){
                                     EasyLoading.showSuccess("Register Successfully");
                                     Navigator.pop(context);
                                   }

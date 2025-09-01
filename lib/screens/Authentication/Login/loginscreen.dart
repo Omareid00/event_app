@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             FirebaseAuthUtil.signInUserWithEmailAndPassword(emailController.text, passwordController.text).
                             then((value) {
                               EasyLoading.dismiss();
-                              if(true == value){
+                              if(value != null){
                                 EasyLoading.showSuccess("Login Successfully");
                                 Navigator.pushReplacementNamed(context, APPROUTES.LayoutView);
                               }
@@ -201,6 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Expanded(
                       child: ElevatedButton.icon(
                         onPressed: () {},
+
                         label: Text(
                           "Login with Google",
                           style: TextStyle(color: AppColors.primary),
@@ -212,7 +213,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           foregroundColor: AppColors.primary,
                           backgroundColor: AppColors.white,
-
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                             side: BorderSide(color: AppColors.primary),
