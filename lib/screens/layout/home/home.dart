@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/appimages/appimages.dart';
 import 'package:event_app/cores/utils/firebase_firestore.dart';
@@ -6,6 +7,9 @@ import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 import 'package:event_app/screens/layout/widgets/eventitemcard.dart';
 import 'package:event_app/screens/layout/widgets/tabitemwidget.dart';
 import 'package:flutter/material.dart';
+
+import '../../../cores/app_routes/app_routes.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -170,7 +174,6 @@ class _HomeState extends State<Home> {
                                 selectedTabIndex ==
                                 createEventCategories.indexOf(categoriesData),
                             createEventCategories: categoriesData,
-
                           );
                         }).toList(),
                       ),
@@ -194,18 +197,32 @@ class _HomeState extends State<Home> {
                   return e.data();
                 }).toList();
 
-                return eventDataList.isEmpty?Center(child: Text("No Events",style: theme.textTheme.bodyLarge,),)    :Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: eventDataList.length,
-                    itemBuilder: (context, index) {
-                      return Eventitemcard(eventData: eventDataList[index]);
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: 10);
-                    },
-                  ),
-                );
+                return eventDataList.isEmpty
+                    ? Center(
+                        child: Text(
+                          "No Events",
+                          style: theme.textTheme.bodyLarge,
+                        ),
+                      )
+                    : Expanded(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: eventDataList.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, APPROUTES.EventDetails, arguments: eventDataList[index]);
+                              },
+                              child: Eventitemcard(
+                                eventData: eventDataList[index],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 10);
+                          },
+                        ),
+                      );
               },
             ),
           ],

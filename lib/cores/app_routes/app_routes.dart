@@ -1,6 +1,8 @@
 
 
 import 'package:event_app/screens/layout/create_event/create_event.dart';
+import 'package:event_app/screens/layout/create_event/event_details/event_details.dart';
+import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/Authentication/Forgetpassword/forgetpassword.dart';
@@ -19,11 +21,14 @@ class APPROUTES{
   static const String Register="Register";
   static const String LayoutView="LayoutView";
   static const String CreateEvent="CreateEvent";
+  static const String EventDetails="EventDetails";
 
 
 }
 class ROUTES{
   ROUTES._();
+
+
   static Map<String, Widget Function(BuildContext)> routes ={
     APPROUTES.splash :(_)=> Splashscreen(),
     APPROUTES.OnboardingView :(_)=> OnboardingView(),
@@ -32,6 +37,7 @@ class ROUTES{
     APPROUTES.Register :(_)=> Register(),
     APPROUTES.LayoutView :(_)=> LayoutView(),
     APPROUTES.CreateEvent :(_)=> CreateEvent(),
+    APPROUTES.EventDetails :(_) => EventDetails(),
 
   };
 }
