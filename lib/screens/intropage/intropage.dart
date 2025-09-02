@@ -7,7 +7,6 @@ import 'package:event_app/cores/localization/custome_trans.dart';
 import 'package:event_app/cores/manager/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../cores/appcolors/appcolors.dart';
 import '../../cores/appimages/appimages.dart';
 
@@ -121,7 +120,7 @@ class _IntroPageState extends State<IntroPage> {
                                   current: provider.themeMode,
                                   values: const [ThemeMode.light, ThemeMode.dark],
                                   onChanged: (value) {
-                                    provider.changeTheme(value! == ThemeMode.dark ? ThemeMode.dark : ThemeMode.light);
+                                    provider.changeTheme(value == ThemeMode.dark ? ThemeMode.dark : ThemeMode.light);
                                   },
                                 iconList: [
                                   Icon(Icons.light_mode,

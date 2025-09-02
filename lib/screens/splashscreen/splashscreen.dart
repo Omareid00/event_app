@@ -19,8 +19,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
     // Set a delay before navigating to the main screen
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
+      Navigator.pushReplacement(context,
         MaterialPageRoute(
           builder: (context) => IntroPage(),
         ), // Replace with your main screen

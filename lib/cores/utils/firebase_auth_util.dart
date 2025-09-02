@@ -6,7 +6,8 @@ abstract class FirebaseAuthUtil {
     String name,
     String email,
     String password,
-  ) async {
+  )
+  async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final credential = await FirebaseAuth.instance
@@ -53,4 +54,6 @@ abstract class FirebaseAuthUtil {
     }
     return 'unexpected';
   }
+
+
 }

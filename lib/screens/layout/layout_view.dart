@@ -1,7 +1,6 @@
 import 'package:event_app/cores/app_routes/app_routes.dart';
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/constants/constants.dart';
-import 'package:event_app/screens/layout/create_event/create_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 

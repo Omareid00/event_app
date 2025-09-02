@@ -74,4 +74,8 @@ class AppProvider extends ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool("isFirst") ?? true;
   }
+
+
+
+
 }

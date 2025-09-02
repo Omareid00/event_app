@@ -334,7 +334,6 @@ class _CreateEventState extends State<CreateEvent> {
                             EasyLoading.dismiss();
                             if(value){
                               Navigator.pop(context);
-
                               BotToast.showCustomNotification(toastBuilder: (cancelFunc) {
                                 return Material(
                                   child: Container(
@@ -418,7 +417,6 @@ class _CreateEventState extends State<CreateEvent> {
       ),
     );
   }
-
   void getcurrentDate() {
     showDatePicker(
       context: context,
@@ -431,7 +429,6 @@ class _CreateEventState extends State<CreateEvent> {
       });
     });
   }
-
   void getCurrentTime() {
     showTimePicker(context: context, initialTime: TimeOfDay.now()).then((
       value,
