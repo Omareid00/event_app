@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Expanded(
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          FirebaseAuthUtil.signInWithGoogle();
+                          FirebaseAuthUtil.loginInWithGoogle(context);
                         },
 
                         label: Text(

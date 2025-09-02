@@ -51,6 +51,7 @@ dependencies:
   location:
   google_sign_in:
   flutter_dotenv: ^6.0.0
+  animated_snack_bar:
 
 
 
