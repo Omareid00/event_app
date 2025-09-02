@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class FirebaseAuthUtil {
@@ -53,6 +55,30 @@ abstract class FirebaseAuthUtil {
       return 'unexpected';
     }
     return 'unexpected';
+  }
+
+
+
+  static final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  //google auth
+  static Future<UserCredential?> signInWithGoogle()
+  async {
+    try{
+      await _googleSignIn.initialize(
+        serverClientId: dotenv.env['SERVER_CLIENT_ID']
+      );
+      final GoogleSignInAccount result = await _googleSignIn.authenticate();
+      final  googleAuth = result.authentication;
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+
+    }catch(e){
+      print("Google Sign In Error: $e");
+      return null;
+    }
+
   }
 
 
