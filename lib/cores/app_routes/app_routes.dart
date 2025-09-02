@@ -1,6 +1,7 @@
 
 
 import 'package:event_app/screens/layout/create_event/create_event.dart';
+import 'package:event_app/screens/layout/create_event/edit_event/edit_event.dart';
 import 'package:event_app/screens/layout/create_event/event_details/event_details.dart';
 import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class APPROUTES{
   static const String LayoutView="LayoutView";
   static const String CreateEvent="CreateEvent";
   static const String EventDetails="EventDetails";
+  static const String EditEvent="EditEvent";
 
 
 }
@@ -38,6 +40,7 @@ class ROUTES{
     APPROUTES.LayoutView :(_)=> LayoutView(),
     APPROUTES.CreateEvent :(_)=> CreateEvent(),
     APPROUTES.EventDetails :(_) => EventDetails(),
+    APPROUTES.EditEvent :(_) => EditEvent(),
 
   };
 }

@@ -1,3 +1,4 @@
+import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -94,6 +95,8 @@ abstract class FirebaseAuthUtil {
       EasyLoading.showError('Failed to sign in');
     }
   }
+
+
 
 
 

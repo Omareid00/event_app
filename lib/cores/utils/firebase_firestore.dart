@@ -50,6 +50,17 @@ import 'package:event_app/screens/layout/create_event/widget/eventdata.dart';
      return documentReference.update({"isFavorite":eventData.isFavorite});
 
    }
+   static Future<void> deleteEvent({required EventData eventData}) {
+     var collectionReference = _getCollectionReference();
+     var documentReference = collectionReference.doc(eventData.eventId);
+     return documentReference.delete();
+
+   }static Future<void> editEvent({required EventData eventData}) {
+     var collectionReference = _getCollectionReference();
+     var documentReference = collectionReference.doc(eventData.eventId);
+     return documentReference.update(eventData.toFirestore());
+
+   }
 
 
 }

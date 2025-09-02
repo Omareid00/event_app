@@ -16,4 +16,5 @@ class AppImages {
   static const String meeting = "assets/images/meeting.png";
   static const String workshop = "assets/images/workshop.png";
   static const String route = "assets/images/route.png";
+  static const String locimg = "assets/images/Frame 83.png";
 }

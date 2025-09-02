@@ -9,24 +9,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 
-class CreateEvent extends StatefulWidget {
-  const CreateEvent({super.key});
+class EditEvent extends StatefulWidget {
+  const EditEvent({super.key});
 
   @override
-  State<CreateEvent> createState() => _CreateEventState();
+  State<EditEvent> createState() => _CreateEventState();
 }
 
-class _CreateEventState extends State<CreateEvent> {
+class _CreateEventState extends State<EditEvent> {
   int selectedTabIndex = 0;
   DateTime? selectedDate;
-
   TimeOfDay? selectedTime;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  late  TextEditingController titleController = TextEditingController();
+  late TextEditingController descriptionController = TextEditingController();
 
-
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
+  // void initState() {
+  //   titleController.text= widget.eventData.eventTitle;
+  // }
   List<CreateEventCategories> createEventCategories = [
     CreateEventCategories(
       categoryTitle: "Book club",
@@ -74,6 +75,10 @@ class _CreateEventState extends State<CreateEvent> {
 
   @override
   Widget build(BuildContext context) {
+    var eventData = ModalRoute.of(context)?.settings.arguments as EventData;
+    var theme = Theme.of(context);
+    String formatDate = DateFormat.yMMMd().format(eventData.selectDate);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -124,7 +129,7 @@ class _CreateEventState extends State<CreateEvent> {
                     tabs: createEventCategories.map((categoriesData) {
                       return CreateEventTabitem(
                         isSelected:
-                            selectedTabIndex ==
+                        selectedTabIndex ==
                             createEventCategories.indexOf(categoriesData),
                         eventcreateData: categoriesData,
                       );
@@ -143,10 +148,10 @@ class _CreateEventState extends State<CreateEvent> {
                     }
                     return null;
                   },
-                  controller: titleController,
+                  controller: titleController..text = eventData.eventTitle,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.edit_note_outlined),
-                    hintText: "Event Title",
+                    hintText: eventData.eventTitle,
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -176,7 +181,7 @@ class _CreateEventState extends State<CreateEvent> {
                     }
                     return null;
                   },
-                  controller: descriptionController,
+                  controller: descriptionController..text = eventData.eventDescription,
                   maxLines: 4,
 
                   decoration: InputDecoration(
@@ -217,9 +222,9 @@ class _CreateEventState extends State<CreateEvent> {
                       },
                       child: Text(
                         selectedDate == null
-                            ? "Choose Date"
+                            ? formatDate
                             : DateFormat(
-                                'yyyy-MM-dd',).format(selectedDate!).toString(),
+                          'yyyy-MM-dd',).format(selectedDate!).toString(),
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -319,81 +324,25 @@ class _CreateEventState extends State<CreateEvent> {
                 ElevatedButton(
                   onPressed: () {
                     var data = EventData(
+                      eventId: eventData.eventId,
                       eventTitle: titleController.text,
                       isFavorite: false,
                       eventDescription: descriptionController.text,
-                      selectDate: selectedDate!,
+                      selectDate: selectedDate ?? eventData.selectDate,
                       eventCategoryId:
-                          createEventCategories[selectedTabIndex].categoryId,
+                      createEventCategories[selectedTabIndex].categoryId,
                       eventCategoryImage:
-                          createEventCategories[selectedTabIndex].categoryImg,
+                      createEventCategories[selectedTabIndex].categoryImg,
                     );
-                    if (formKey.currentState!.validate()) {
-                      if (selectedDate != null && selectedTime != null) {
+                      if (selectedDate != null ) {
                         EasyLoading.show();
-                        FirebaseFirestoreService.createNewEventTask(
-                          data,).then((value) {
-                            EasyLoading.dismiss();
-                            if(value){
-                              Navigator.pop(context);
-                              BotToast.showCustomNotification(toastBuilder: (cancelFunc) {
-                                return Material(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        "Event Created Successfully",
-                                        style: TextStyle(
-                                          color: AppColors.primary,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                              duration: const Duration(seconds: 4),
-                                dismissDirections: [DismissDirection.endToStart]
-                              );
-                            }else{
-                              BotToast.showCustomNotification(toastBuilder: (cancelFunc) {
-                                return Material(
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const Center(
-                                          child: Text(
-                                            "Something went wrong",
-                                            style: TextStyle(
-                                              color: AppColors.primary,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                                  duration: const Duration(seconds: 2),
-                                  dismissDirections: [DismissDirection.endToStart]
-                              );
-                            }
-                          },);
+                        FirebaseFirestoreService.updateEvent(eventData: data);
+                        EasyLoading.showSuccess("Event update success");
+                        EasyLoading.dismiss();
+                        Navigator.pop(context);
+
+
                       }
-                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -404,7 +353,7 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                   ),
                   child: Text(
-                    "Add Event",
+                    "Update Event",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -434,8 +383,8 @@ class _CreateEventState extends State<CreateEvent> {
   }
   void getCurrentTime() {
     showTimePicker(context: context, initialTime: TimeOfDay.now()).then((
-      value,
-    ) {
+        value,
+        ) {
       setState(() {
         selectedTime = value;
       });
