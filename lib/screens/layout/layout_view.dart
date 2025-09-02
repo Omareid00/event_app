@@ -1,6 +1,8 @@
 import 'package:event_app/cores/app_routes/app_routes.dart';
 import 'package:event_app/cores/appcolors/appcolors.dart';
 import 'package:event_app/cores/constants/constants.dart';
+import 'package:event_app/cores/localization/custome_tr.dart';
+import 'package:event_app/cores/localization/custome_trans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 
@@ -36,20 +38,20 @@ class _LayoutViewState extends State<LayoutView> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Home",
+            label: CustomeTrans.home.customTr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
-            label: "map",
+            label: CustomeTrans.map.customTr,
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),
-            label: "Love",
+            label: CustomeTrans.love.customTr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
-            label: "Profile",
+            label: CustomeTrans.profile.customTr,
           ),
         ],
       ),
